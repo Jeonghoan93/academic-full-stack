@@ -1,15 +1,18 @@
+import { TransactionDiv } from "../styles";
 import { Transaction } from "../types";
 
-export const TransactionList = ({
-  transactions,
-}: {
+interface Props {
   transactions: Transaction[];
-}) => {
+}
+
+const TransactionList: React.FC<Props> = ({ transactions }) => {
   return (
     <div>
-      <h2>Transactions</h2>
+      <h2>
+        {transactions.length === 0 ? "Please enter input" : "Transactions"}
+      </h2>
       {transactions.map((transaction) => (
-        <div
+        <TransactionDiv
           key={transaction.transaction_id}
           data-type="transaction"
           data-account-id={transaction.account_id}
@@ -20,8 +23,10 @@ export const TransactionList = ({
           <p>Account ID: {transaction.account_id}</p>
           <p>Amount: {transaction.amount}</p>
           <p>Balance: {transaction.balance}</p>
-        </div>
+        </TransactionDiv>
       ))}
     </div>
   );
 };
+
+export default TransactionList;

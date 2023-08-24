@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { isValidUUID, submitTransaction } from "./utils";
-import { Transaction } from "./types";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { Input } from "./components/Input";
-import { TransactionList } from "./components/TransactionList";
+import TransactionList from "./components/TransactionList";
+import { AppWrapper } from "./styles";
+import { Transaction } from "./types";
+import { isValidUUID, submitTransaction } from "./utils";
 
 function App() {
   const [accountId, setAccountId] = useState<string>("");
@@ -43,7 +44,7 @@ function App() {
   return (
     <>
       <ErrorMessage message={errorMessage} />
-      <div className="App">
+      <AppWrapper className="App">
         <div>
           <Input
             value={accountId}
@@ -66,7 +67,7 @@ function App() {
           </button>
         </div>
         <TransactionList transactions={transactions} />
-      </div>
+      </AppWrapper>
     </>
   );
 }

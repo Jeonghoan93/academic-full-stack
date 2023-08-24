@@ -1,3 +1,5 @@
+import { StyledInput } from "../styles";
+
 export const Input = ({
   value,
   placeholder,
@@ -10,7 +12,7 @@ export const Input = ({
   onChange: (value: string) => void;
 }) => {
   return (
-    <input
+    <StyledInput
       data-type={dataType}
       placeholder={placeholder}
       value={value}
