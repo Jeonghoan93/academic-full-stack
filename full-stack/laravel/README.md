@@ -6,6 +6,8 @@
 
 ## Start
 
+- composer install
+- cp .env.example .env
 - php artisan serve --port=3000  
 
 ## Test
