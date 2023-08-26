@@ -2,18 +2,17 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
+
+
 class AccountsService {
-    protected $accounts = [];
 
-    public function updateAccountBalance($accountId, $amount) {
-       if (!isset($this->accounts[$accountId])) {
-        $this->accounts[$accountId] = 0;
-
-        $this->accounts[$accountId] += $amount;
-       }
+    public function updateAccountBalance(string $accountId, float $amount): void {
+        $currentBalance = $this->getAccountBalance($accountId);
+        Cache::put($accountId, $currentBalance + $amount);
     }
 
-    public function getAccountBalance($accountId) {
-        return $this->accounts[$accountId] ?? 0;
+    public function getAccountBalance(string $accountId): float {
+        return Cache::get($accountId, 0);
     }
 }

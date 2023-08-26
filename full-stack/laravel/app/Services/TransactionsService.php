@@ -3,23 +3,25 @@
 namespace App\Services;
 
 use App\Services\AccountsService;
-use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\Cache;
+
+use InvalidArgumentException;
 
 class TransactionsService {
     protected $accountsService;
-    protected $transactions = [];
 
     public function __construct(AccountsService $accountsService) {
         $this->accountsService = $accountsService;
     }
 
-    public function createTransaction($accountId, $amount) {
-       if (!$accountId || !is_string($accountId)) {
-           throw new \Exception('Invalid account id');
+    public function createTransaction(string $accountId, float $amount) {
+       if (!is_string($accountId) || !$accountId) {
+            throw new InvalidArgumentException('Invalid account ID');
        }
 
-       if (!$amount || !is_numeric($amount)) {
-           throw new \Exception('Invalid amount');
+       if (!is_numeric($amount)) {
+            throw new InvalidArgumentException('Invalid amount');
        }
 
        $transactionId = "{$accountId}-" . now()->timestamp;
@@ -34,12 +36,12 @@ class TransactionsService {
         'balance' => $balance,
        ];
 
-       $this->transactions[$transactionId] = $transaction;
+       Cache::put("transaction_{$transactionId}", $transaction, now()->addHours(1));
 
        return $transaction;
     }
 
-    public function getTransactions($transactionId) {
-        return $this->transactions[$transactionId] ?? null;
+    public function getTransaction(string $transactionId) {
+        return Cache::get("transaction_{$transactionId}");
     }
 }

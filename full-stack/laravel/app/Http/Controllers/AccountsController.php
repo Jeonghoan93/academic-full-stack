@@ -11,8 +11,12 @@ class AccountsController extends Controller {
         $this->accountsService = $accountsService;
     }
 
-    public function getAccountBalance($accountId) {
+    public function getAccountBalance(string $accountId) {
         $balance = $this->accountsService->getAccountBalance($accountId);
-        return response()->json(['balance' => $balance, 'account_id' => $accountId]);
+
+        return response()->json([
+            'account_id' => $accountId,
+            'balance' => $balance,
+        ], 200);
     }
 }

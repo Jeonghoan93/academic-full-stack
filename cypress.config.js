@@ -2,10 +2,10 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   env: {
-    apiUrl: "http://127.0.0.1:3000",
+    apiUrl: "http://localhost:3000", // backend port
   },
   e2e: {
-    baseUrl: "http://192.168.5.71:5173",
+    baseUrl: "http://localhost:5173", // frontend port
     setupNodeEvents(on, config) {},
     supportFile: false,
   },

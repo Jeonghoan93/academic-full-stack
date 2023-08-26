@@ -13,12 +13,26 @@ class TransactionsController extends Controller {
     }
 
     public function createTransaction(Request $request) {
-        $dto = $request->only(['account_id', 'amount']);
+        $validatedData = $request->validate([
+            'account_id' => 'required|string',
+            'amount' => 'required|numeric',
+        ]);
 
-        return $this->transactionsService->createTransaction($dto['account_id'], $dto['amount']);
+        $accountId = $validatedData['account_id'];
+        $amount = $validatedData['amount'];
+
+        $transaction = $this->transactionsService->createTransaction($accountId, $amount);
+
+        return response()->json($transaction, 201);
     }
 
-    public function getTransaction($transactionId) {
-      return $this->transactionsService->getTransaction($transactionId);
+    public function getTransaction(string $transactionId) {
+      $transaction = $this->transactionsService->getTransaction($transactionId);
+
+      if (!$transaction) {
+         return response()->json(['error' => "Transaction with ID {$transactionId} not found"], 404);
+      }
+
+      return response()->json($transaction, 200);
     }
 }
