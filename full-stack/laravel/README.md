@@ -4,7 +4,10 @@
 
 - Used built-in caching for the sake of simplicity. 
 
-## Start the app
+## Start
 
 - php artisan serve --port=3000  
 
+## Test
+
+php artisan test

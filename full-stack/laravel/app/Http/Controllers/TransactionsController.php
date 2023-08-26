@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\TransactionsService;
 
+use Ramsey\Uuid\Uuid;
+
 class TransactionsController extends Controller {
     protected $transactionsService;
 
@@ -14,7 +16,11 @@ class TransactionsController extends Controller {
 
     public function createTransaction(Request $request) {
         $validatedData = $request->validate([
-            'account_id' => 'required|string',
+            'account_id' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (!Uuid::isValid($value)) {
+                    $fail('Invalid account ID');
+                }
+            }],
             'amount' => 'required|numeric',
         ]);
 
