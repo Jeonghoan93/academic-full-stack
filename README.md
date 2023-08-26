@@ -1,3 +1,8 @@
+## Before run test
+
+- cd/full-stack/
+- run either backend framework ( php laravel or nest.js ) and the frontend ( react ) // read me included
+
 ## Run test
 
 - npm install 
