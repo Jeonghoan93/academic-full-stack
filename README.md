@@ -6,3 +6,5 @@
 ## Configuration
 
 - any changes in port, should configure cypress.config.js
+
+- if run into err with port frontend port failure, try to run with "yarn dev --host" then copy the network address to cypress.config.js baseUrl
