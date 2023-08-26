@@ -12,4 +12,4 @@
 
 ## Test
 
-php artisan test
+- php artisan test
